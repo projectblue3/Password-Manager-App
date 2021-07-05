@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/projectblue3/Password-Manager-App#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "mongoose": "^5.12.14"
+    "mongoose": "^5.12.14",
+    "mongoose-encryption": "^2.1.0"
   }
 }
