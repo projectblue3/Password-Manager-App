@@ -21,6 +21,11 @@ const PasswordSchema = mongoose.Schema({
     note: {
         type: String,
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'An owner is needed'],
+    },
 });
 
 /*
