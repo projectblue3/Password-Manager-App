@@ -162,9 +162,15 @@ router.patch('/:id/setpassword', validateToken, async (req, res, next) => {
         if (user) {
             user.password = req.body.password;
 
+            refreshToken = user.getSignedRefreshToken();
+
+            user.refreshToken = refreshToken;
+
+            accessToken = user.getSignedJwtToken();
+
             await user.save();
 
-            res.status(200).json({ success: true, msg: 'Password updated' });
+            res.status(200).json({ success: true, msg: 'Password updated', accessToken, refreshToken });
         }
     } catch (error) {
         next(error);
@@ -172,7 +178,7 @@ router.patch('/:id/setpassword', validateToken, async (req, res, next) => {
 });
 
 //Logout
-router.delete('/:id/logout', validateRefresh, async (req, res, next) => {
+router.post('/:id/logout', validateRefresh, async (req, res, next) => {
     try {
         const user = await validateUser(req.params.id, req.idInToken, next);
 

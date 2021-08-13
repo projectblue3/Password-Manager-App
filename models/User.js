@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
 const UserSchema = mongoose.Schema({
     email: {
@@ -60,7 +61,9 @@ UserSchema.methods.getSignedJwtToken = function () {
 };
 
 UserSchema.methods.getSignedRefreshToken = function () {
-    return jwt.sign({ id: this._id }, process.env.JWT_REFRESH_SECRET, {
+    const tokenId = uuidv4();
+
+    return jwt.sign({ id: this._id, tokenId: tokenId }, process.env.JWT_REFRESH_SECRET, {
         expiresIn: process.env.JWT_REFRESH_EXPIRE,
     });
 };
